@@ -28,9 +28,7 @@ todosContainer.addEventListener('click', event => {
 searchInput.addEventListener('input', event => {
   const inputValue = event.target.value.trim();
   
-  const filteredLis = Array.from(todosContainer.children).filter(todo => {
-    return todo.textContent.includes(inputValue)
-  })
-
-  console.log(filteredLis);
+  Array.from(todosContainer.children)
+  .filter(todo => !todo.textContent.includes(inputValue))
+  .forEach(li => li.setAttribute('class','d-none'))
 })

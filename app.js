@@ -18,7 +18,7 @@ formAddTodo.addEventListener('submit', event => {
 })
 
 todosContainer.addEventListener('click', event => {
-  if(event.target.className === 'far fa-trash-alt delete'){
+  if (event.target.className === 'far fa-trash-alt delete') {
     //OR Array.from(event.target.classList).includes('delete')
     const li = event.target.parentElement;
     todosContainer.removeChild(li)
@@ -27,8 +27,16 @@ todosContainer.addEventListener('click', event => {
 
 searchInput.addEventListener('input', event => {
   const inputValue = event.target.value.trim();
-  
+
+
+
   Array.from(todosContainer.children)
-  .filter(todo => !todo.textContent.includes(inputValue))
-  .forEach(li => li.setAttribute('class','d-none'))
+    .filter(todo => !todo.textContent.includes(inputValue))
+    .forEach(li => li.classList.add('d-none'))
+
+  Array.from(todosContainer.children)
+    .filter(todo => todo.textContent.includes(inputValue))
+    .forEach(li => {
+      
+    })
 })

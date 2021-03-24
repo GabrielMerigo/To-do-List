@@ -26,17 +26,19 @@ todosContainer.addEventListener('click', event => {
 })
 
 searchInput.addEventListener('input', event => {
-  const inputValue = event.target.value.trim();
-
-
+  const inputValue = event.target.value.trim().toLowerCase()
 
   Array.from(todosContainer.children)
-    .filter(todo => !todo.textContent.includes(inputValue))
-    .forEach(li => li.classList.add('d-none'))
-
-  Array.from(todosContainer.children)
-    .filter(todo => todo.textContent.includes(inputValue))
+    .filter(todo => !todo.textContent.toLowerCase().includes(inputValue))
     .forEach(li => {
-      
+      li.classList.remove('d-block')
+      li.classList.add('hidden')
+    })
+
+  Array.from(todosContainer.children)
+    .filter(todo => todo.textContent.toLowerCase().includes(inputValue))
+    .forEach(li => {
+      li.classList.remove('hidden')
+      li.classList.add('d-block')
     })
 })

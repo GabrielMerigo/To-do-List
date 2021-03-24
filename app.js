@@ -17,13 +17,7 @@ formAddTodo.addEventListener('submit', event => {
   }
 })
 
-todosContainer.addEventListener('click', event => {
-  if (event.target.className === 'far fa-trash-alt delete') {
-    //OR Array.from(event.target.classList).includes('delete')
-    const li = event.target.parentElement;
-    todosContainer.removeChild(li)
-  }
-})
+todosContainer.addEventListener('click', removeTodo)
 
 searchInput.addEventListener('input', event => {
   const inputValue = event.target.value.trim().toLowerCase()
@@ -42,3 +36,13 @@ searchInput.addEventListener('input', event => {
       li.classList.add('d-block')
     })
 })
+
+
+const removeTodo = event => {
+  const thereIsClassDelete = event.target.className.includes('delete');
+
+  if (thereIsClassDelete) {
+    const li = document.querySelector('.delete');
+    todosContainer.removeChild(li.parentElement)
+  }
+}

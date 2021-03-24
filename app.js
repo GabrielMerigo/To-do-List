@@ -1,5 +1,6 @@
 const formAddTodo = document.querySelector('.form-add-todo')
 const todosContainer = document.querySelector('.todos-container')
+const searchInput = document.querySelector('.form-search input')
 
 formAddTodo.addEventListener('submit', event => {
   event.preventDefault()
@@ -18,8 +19,18 @@ formAddTodo.addEventListener('submit', event => {
 
 todosContainer.addEventListener('click', event => {
   if(event.target.className === 'far fa-trash-alt delete'){
-    // Array.from(event.target.classList).includes('delete')
+    //OR Array.from(event.target.classList).includes('delete')
     const li = event.target.parentElement;
     todosContainer.removeChild(li)
   }
+})
+
+searchInput.addEventListener('input', event => {
+  const inputValue = event.target.value.trim();
+  
+  const filteredLis = Array.from(todosContainer.children).filter(todo => {
+    return todo.textContent.includes(inputValue)
+  })
+
+  console.log(filteredLis);
 })

@@ -15,3 +15,11 @@ formAddTodo.addEventListener('submit', event => {
     event.target.reset()
   }
 })
+
+todosContainer.addEventListener('click', event => {
+  if(event.target.className === 'far fa-trash-alt delete'){
+    // Array.from(event.target.classList).includes('delete')
+    const li = event.target.parentElement;
+    todosContainer.removeChild(li)
+  }
+})

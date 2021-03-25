@@ -7,9 +7,9 @@ const insertTodoIntoDOM = event => {
 
   const input = event.target.add.value.trim()
   const HTMLtemplate = `
-  <li class="list-group-item d-flex justify-content-between align-items-center">
+  <li class="list-group-item d-flex justify-content-between align-items-center" data-todo="${input}">
       <span>${input}</span>
-      <i class="far fa-trash-alt delete"></i>
+      <i class="far fa-trash-alt" data-trash="${input}"></i>
   </li>
   `;
 
@@ -20,43 +20,38 @@ const insertTodoIntoDOM = event => {
 }
 
 const removeTodo = event => {
-  const classTarget = event.target.className;
-  const liRemoved = event.target.parentElement
+  const classTarget = event.target;
+  const trashDataValue = classTarget.dataset.trash;
+  const li = document.querySelector(`[data-todo="${trashDataValue}"]`)
 
-  if (classTarget.includes('delete')) {
-    todosContainer.removeChild(liRemoved)
+  if (trashDataValue) {
+    li.remove()
   }
 }
 
-const removeTodoInputSearch = (todosChildren, inputValue) => {
-  Array.from(todosChildren)
-    .filter(todo => {
-      const includesValueInput = todo.textContent
-        .toLowerCase()
-        .includes(inputValue)
+const filterTodos = (arrayValues, inputValue, returnMatchedTodos) => arrayValues
+  .filter(todo => {
+    const matchedTodos = todo.textContent.toLowerCase().includes(inputValue)
+    return returnMatchedTodos ? matchedTodos : !matchedTodos
+  })
 
-      return includesValueInput
-    })
+
+const hideTodos = (arrayValues, inputValue) => {
+  filterTodos(arrayValues, inputValue, false)
+    .forEach(li => li.classList.add('hidden'))
+}
+
+const showTodos = (arrayValues, inputValue) => {
+  filterTodos(arrayValues, inputValue, true)
     .forEach(li => li.classList.remove('hidden'))
 }
 
-const addTodoInputSearch = (todosChildren, inputValue) => {
-  Array.from(todosChildren)
-  .filter(todo => {
-    const notIncludesValueInput = todo.textContent
-      .toLowerCase()
-      .includes(inputValue)
-
-    return !notIncludesValueInput
-  }).forEach(li => li.classList.add('hidden'))
-} 
-
 const validationSearchInputValue = event => {
   const inputValue = event.target.value.trim().toLowerCase()
-  const todosChildren = todosContainer.children;
+  const arrayValues = Array.from(todosContainer.children);
 
-  removeTodoInputSearch(todosChildren, inputValue)
-  addTodoInputSearch(todosChildren, inputValue)
+  hideTodos(arrayValues, inputValue)
+  showTodos(arrayValues, inputValue)
 }
 
 formAddTodo.addEventListener('submit', insertTodoIntoDOM)
